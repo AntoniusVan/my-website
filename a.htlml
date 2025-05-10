@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kontakt</title>
+  </head>
+  <body>
+    <h1>Kontakt</h1>
+
+    <p>Schreib mir eine Mail an: 
+      <a href = "mailto: official@kreditkartenbetrug.ru">
+      official@kreditkartenbetrug.ru</a>
+    </p>
+
+    <a href="index.html" title = "Startseite">Zurück zur Startseite</a>
+  </body>
+</html>
